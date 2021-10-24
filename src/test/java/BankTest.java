@@ -29,6 +29,7 @@ public class BankTest {
         assertEquals(bank.getListOfAccounts().size(), 1);
         assertTrue(bank.getListOfAccounts().containsKey(SAVINGS_ID));
         assertTrue(bank.getListOfAccounts().get(SAVINGS_ID) instanceof SavingsAccount);
+        assertEquals(SAVINGS_ID, bank.getListOfAccounts().get(SAVINGS_ID).getID());
         System.out.println("the accounts are:" + bank.getListOfAccounts());
 
     }
@@ -39,6 +40,7 @@ public class BankTest {
         assertEquals(1, bank.getListOfAccounts().size());
         assertTrue(bank.getListOfAccounts().containsKey(CHECKING_ID));
         assertTrue(bank.getListOfAccounts().get(CHECKING_ID) instanceof CheckingAccount);
+        assertEquals(CHECKING_ID, bank.getListOfAccounts().get(CHECKING_ID).getID());
         System.out.println("the accounts are:" + bank.getListOfAccounts());
 
     }
@@ -48,6 +50,7 @@ public class BankTest {
         bank.create(CD, CD_ID, 1.2, 2000);
         assertEquals(1, bank.getListOfAccounts().size());
         assertTrue(bank.getListOfAccounts().get(CD_ID) instanceof CDAccount);
+        assertEquals(CD_ID, bank.getListOfAccounts().get(CD_ID).getID());
         System.out.println("the accounts are:" + bank.getListOfAccounts());
     }
 
@@ -57,6 +60,7 @@ public class BankTest {
         bank.create(CHECKING, 24681012, 1.5);
         assertEquals(2, bank.getListOfAccounts().size());
         assertTrue(bank.getListOfAccounts().containsKey(SAVINGS_ID));
+        assertTrue(bank.getListOfAccounts().containsKey(24681012));
         assertFalse(bank.getListOfAccounts().get(24681012) instanceof SavingsAccount);
         System.out.println("the accounts are:" + bank.getListOfAccounts());
     }
@@ -69,10 +73,26 @@ public class BankTest {
     }
 
     @Test
+    public void deposit_twice_into_savings_account() {
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 2000);
+        bank.deposit(SAVINGS_ID, 500);
+        assertEquals(2500, bank.getListOfAccounts().get(SAVINGS_ID).getAccountBalance());
+    }
+
+    @Test
     public void deposit_into_checking_account() {
         bank.create(CHECKING, CHECKING_ID, APR);
         bank.deposit(CHECKING_ID, 2000);
         assertEquals(2000, bank.getListOfAccounts().get(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    public void deposit_twice_into_checking_account() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 300);
+        bank.deposit(CHECKING_ID, 40);
+        assertEquals(340, bank.getListOfAccounts().get(CHECKING_ID).getAccountBalance());
     }
 
     @Test
@@ -112,11 +132,29 @@ public class BankTest {
     }
 
     @Test
+    public void savings_account_can_be_withdrawn_twice_from() {
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 2);
+        bank.withdraw(SAVINGS_ID, 2.5);
+        bank.withdraw(SAVINGS_ID, 50);
+        assertEquals(0, bank.getListOfAccounts().get(SAVINGS_ID).getAccountBalance());
+    }
+
+    @Test
     public void checking_account_in_bank_can_be_withdrawn_from() {
         bank.create(CHECKING, CHECKING_ID, APR);
         bank.deposit(CHECKING_ID, 50);
         bank.withdraw(CHECKING_ID, 10);
         assertEquals(40, bank.getListOfAccounts().get(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    public void checking_account_be_withdrawn_twice_from() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 50);
+        bank.withdraw(CHECKING_ID, 10);
+        bank.withdraw(CHECKING_ID, 5);
+        assertEquals(35, bank.getListOfAccounts().get(CHECKING_ID).getAccountBalance());
     }
 
     @Test

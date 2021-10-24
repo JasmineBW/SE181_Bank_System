@@ -29,21 +29,25 @@ public class AccountTest {
     @Test
     public void creating_new_savings_account() {
         SavingsAccount savings = new SavingsAccount("savings", SAVINGS_ID, 0.2);
-        assertEquals(SAVINGS_ID, savings.getID());
+        //assertEquals(SAVINGS_ID, savings.getID());
+        assertEquals(0.2, savings.getAPR());
         assertTrue(approvedAccounts.contains(savings.getAccountType()));
     }
 
     @Test
     public void creating_new_checking_account() {
         CheckingAccount checking = new CheckingAccount("checking", 87654321, 1.2);
-        assertEquals(CHECKING_ID, checking.getID());
+        //assertEquals(CHECKING_ID, checking.getID());
+        assertEquals(1.2, checking.getAPR());
         assertTrue(approvedAccounts.contains(checking.getAccountType()));
     }
 
     @Test
     public void creating_new_cd_account() {
         CDAccount cd = new CDAccount("cd", 01234567, 1.2, 2000);
-        assertEquals(CD_ID, cd.getID());
+        //assertEquals(CD_ID, cd.getID());
+        assertEquals(1.2, cd.getAPR());
+        assertEquals(2000, cd.getAccountBalance());
         assertTrue(approvedAccounts.contains(cd.getAccountType()));
     }
 

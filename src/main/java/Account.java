@@ -1,4 +1,4 @@
-public class Account implements BankCommands {
+public abstract class Account {
     protected int accountBalance;
     private String type;
     private int ID;
@@ -11,16 +11,10 @@ public class Account implements BankCommands {
         this.accountBalance = 0;
     }
 
-    public static Account create(String type, int ID, double APR) {
-        return new Account(type, ID, APR);
-    }
-
-    @Override
     public void deposit(int amount) {
         this.accountBalance += amount;
     }
 
-    @Override
     public void withdraw(double amount) {
         if (accountBalance < amount) {
             this.accountBalance -= this.accountBalance;
@@ -42,6 +36,9 @@ public class Account implements BankCommands {
     }
 
 
+    public double getAPR() {
+        return this.APR;
+    }
 }
 
 
