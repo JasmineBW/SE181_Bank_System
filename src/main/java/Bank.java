@@ -22,14 +22,14 @@ public class Bank {
         }
     }
 
-    public void create(String type, int ID, double APR, int amount) {
+    public void create(String type, int ID, double APR, double amount) {
         if (type == "cd") {
             Account new_account = new CDAccount(type, ID, APR, amount);
             accounts.put(ID, new_account);
         }
     }
 
-    public void deposit(int ID, int amount) {
+    public void deposit(int ID, double amount) {
         Account retrieved_account = accounts.get(ID);
         retrieved_account.deposit(amount);
     }
@@ -37,5 +37,18 @@ public class Bank {
     public void withdraw(int ID, double amount) {
         Account retrieved_account = accounts.get(ID);
         retrieved_account.withdraw(amount);
+    }
+
+    public boolean containsIdNumber(int ID) {
+        if (accounts.containsKey(ID)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getAccountType(int ID) {
+        Account retrieved_account = accounts.get(ID);
+        return retrieved_account.getAccountType();
     }
 }

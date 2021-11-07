@@ -1,5 +1,5 @@
 public abstract class Account {
-    protected int accountBalance;
+    protected double accountBalance;
     private String type;
     private int ID;
     private double APR;
@@ -11,7 +11,7 @@ public abstract class Account {
         this.accountBalance = 0;
     }
 
-    public void deposit(int amount) {
+    public void deposit(double amount) {
         this.accountBalance += amount;
     }
 
@@ -31,7 +31,7 @@ public abstract class Account {
         return this.type;
     }
 
-    public int getAccountBalance() {
+    public double getAccountBalance() {
         return this.accountBalance;
     }
 
