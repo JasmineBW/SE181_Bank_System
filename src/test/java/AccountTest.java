@@ -23,7 +23,7 @@ public class AccountTest {
         savings = new SavingsAccount("savings", SAVINGS_ID, 0.2);
         cd = new CDAccount("cd", 01234567, 1.2, 0);
         checking = new CheckingAccount("checking", 87654321, 1.2);
-        List<String> createdAccountsForTesting = List.of("savings", "checking", "cd");
+        //List<String> createdAccountsForTesting = List.of("savings", "checking", "cd");
     }
 
     @Test
