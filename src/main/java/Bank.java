@@ -13,17 +13,17 @@ public class Bank {
     }
 
     public void create(String type, int ID, double APR) {
-        if (type == "savings") {
+        if (type.equals("savings")) {
             Account new_account = new SavingsAccount(type, ID, APR);
             accounts.put(ID, new_account);
-        } else if (type == "checking") {
+        } else if (type.equals("checking")) {
             Account new_account = new CheckingAccount(type, ID, APR);
             accounts.put(ID, new_account);
         }
     }
 
     public void create(String type, int ID, double APR, double amount) {
-        if (type == "cd") {
+        if (type.equals("cd")) {
             Account new_account = new CDAccount(type, ID, APR, amount);
             accounts.put(ID, new_account);
         }
@@ -50,5 +50,9 @@ public class Bank {
     public String getAccountType(int ID) {
         Account retrieved_account = accounts.get(ID);
         return retrieved_account.getAccountType();
+    }
+
+    public Account getAccount(int ID) {
+        return accounts.get(ID);
     }
 }

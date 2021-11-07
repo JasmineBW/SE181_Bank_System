@@ -10,6 +10,7 @@ public class CreateCommandValidator extends Validator {
         if (commandChecker(command) && accountTypeChecker(accountType) && extra == "" && idChecker(id) &&
                 !hasAccountWithIdCheck(id)) {
             accountType = accountType.toLowerCase();
+
             if (!Objects.equals(amount, "")) {
                 if (accountType.equals("savings") || accountType.equals("checking")) {
                     return false;
