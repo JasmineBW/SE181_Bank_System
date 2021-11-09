@@ -4,8 +4,8 @@ public abstract class Validator {
 
     private static final List<String> approvedAccounts = List.of("savings", "checking", "cd");
     private static List<String> approvedCommands = List.of("create", "deposit", "withdrawal", "transfer", "pass", "output");
+    public Output invalidCommandsOutput = new Output();
     protected Bank bank;
-
 
     public static boolean commandChecker(String command) {
         command = command.toLowerCase();

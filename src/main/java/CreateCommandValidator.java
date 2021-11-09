@@ -1,13 +1,14 @@
 import java.util.Objects;
 
 public class CreateCommandValidator extends Validator {
+    private String userInput;
 
     public CreateCommandValidator(Bank bank) {
         this.bank = bank;
     }
 
     public boolean validate(String command, String accountType, String id, String apr, String amount, String extra) {
-        if (commandChecker(command) && accountTypeChecker(accountType) && extra == "" && idChecker(id) &&
+        if (commandChecker(command) && accountTypeChecker(accountType) && Objects.equals(extra, "") && idChecker(id) &&
                 !hasAccountWithIdCheck(id)) {
             accountType = accountType.toLowerCase();
 
@@ -31,6 +32,8 @@ public class CreateCommandValidator extends Validator {
             }
 
         }
+        userInput = String.join(" ", command, accountType, id, apr, amount, extra);
+        invalidCommandsOutput.updateInvalidCommandsList(userInput);
         return false;
     }
 }
