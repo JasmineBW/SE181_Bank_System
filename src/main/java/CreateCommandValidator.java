@@ -32,8 +32,7 @@ public class CreateCommandValidator extends Validator {
             }
 
         }
-        userInput = String.join(" ", command, accountType, id, apr, amount, extra);
-        invalidCommandsOutput.updateInvalidCommandsList(userInput);
+        invalidCommandsOutput.updateInvalidCommandsList(String.join(" ", command, accountType, id, apr, amount, extra));
         return false;
     }
 }
