@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -28,7 +27,9 @@ public class OutputStorageTest extends Validator {
         extra = "";
         userInput = String.join(" ", command, accountType, id, apr, amount, extra);
         boolean output = createCommandValidator.validate(command, accountType, id, apr, amount, extra);
-        assertFalse(output);
+        if (!output) {
+            invalidCommandsOutput.updateInvalidCommandsList(userInput);
+        }
         assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput));
 
     }
@@ -39,11 +40,43 @@ public class OutputStorageTest extends Validator {
         id = "200";
         amount = "";
         extra = "";
-        boolean output = depositCommandValidator.validate(command, id, amount, extra);
         userInput = String.join(" ", command, id, amount, extra);
-        assertFalse(output);
+        boolean output = depositCommandValidator.validate(command, id, amount, extra);
+        if (!output) {
+            invalidCommandsOutput.updateInvalidCommandsList(userInput);
+        }
         assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput));
-        System.out.println(invalidCommandsOutput.accessInvalidOutputList());
+
+    }
+
+    @Test
+    void store_two_invalid_inputs() {
+        command = "create";
+        accountType = "cdm";
+        id = "12345678";
+        apr = "0.2";
+        amount = "";
+        extra = "";
+        userInput = String.join(" ", command, accountType, id, apr, amount, extra);
+        boolean output = createCommandValidator.validate(command, accountType, id, apr, amount, extra);
+
+        command = "deposit";
+        id = "55555555";
+        amount = "500";
+        extra = "";
+        String userInput1 = String.join(" ", command, id, amount);
+        boolean output1 = depositCommandValidator.validate(command, id, amount, extra);
+
+        if (!output) {
+            invalidCommandsOutput.updateInvalidCommandsList(userInput);
+        }
+
+        if (!output1) {
+            invalidCommandsOutput.updateInvalidCommandsList(userInput1);
+        }
+        assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput));
+        assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput1));
+
 
     }
 }
