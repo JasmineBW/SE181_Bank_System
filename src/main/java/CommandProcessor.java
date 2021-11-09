@@ -20,7 +20,6 @@ public class CommandProcessor {
                 bank.create(accountType, ID, APR);
             }
         }
-
     }
 
     public void process(String command, String accountType, String id, String apr, String Amount) {

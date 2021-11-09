@@ -22,13 +22,12 @@ public class CommandProcessorTest {
 
     @Test
     public void valid_create_checking_or_savings_command() {
-        userInput = "create checking 12345678 1.0";
         command = "create";
         accountType = "checking";
         id = "12345678";
         apr = "1.0";
-        amount = "0";
-        commandProcessor.process(command, accountType, id, apr, amount);
+        commandProcessor.process(command, accountType, id, apr);
+        System.out.println(bank.getListOfAccounts());
         assertTrue(bank.containsIdNumber(12345678));
         assertEquals(1.0, bank.getAccount(12345678).getAPR());
     }
