@@ -64,4 +64,14 @@ public class MasterControlTest {
 
         assertSingleCommand("create checking 12345678 1.0", actual);
     }
+
+    // @Test
+    //void invalid_to_deposit_in_account_that_does_not_exist() {
+    //  input.add("create savings 12345678 1.0");
+    // input.add("deposit 00000001 200");
+
+    // List<String> actual = masterControl.start(input);
+
+    //assertSingleCommand("create savings 12345678 1.0", actual);
+    //}
 }

@@ -20,11 +20,18 @@ public class MasterControl {
     public List<String> start(List<String> input) {
         for (String command : input) {
             String split[] = command.split(" ", 0);
+
+            //if (Objects.equals(split[0], "create")) {
             if (createCommandValidator.validate(split[0], split[1], split[2], split[3], "", "")) {
                 commandProcessor.process(split[0], split[1], split[2], split[3]);
-            } else {
+            }
+            // } else if (split[0] == "deposit") {
+            //   if (depositCommandValidator.validate(split[0], split[1], split[2], "")) {
+            //     commandProcessor.process(split[0], split[1], split[2]);
+            //}
+
+            else {
                 outputStorage.updateInvalidCommandsList(command);
-                System.out.println(outputStorage.accessInvalidOutputList());
             }
         }
         return outputStorage.accessInvalidOutputList();
