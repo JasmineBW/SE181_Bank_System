@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class OutputTest extends Validator {
+public class OutputStorageTest extends Validator {
 
 
     Bank bank = new Bank();

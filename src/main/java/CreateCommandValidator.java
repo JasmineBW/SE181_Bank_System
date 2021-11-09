@@ -32,7 +32,6 @@ public class CreateCommandValidator extends Validator {
             }
 
         }
-        invalidCommandsOutput.updateInvalidCommandsList(String.join(" ", command, accountType, id, apr, amount, extra));
         return false;
     }
 }

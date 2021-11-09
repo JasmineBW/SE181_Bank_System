@@ -9,7 +9,6 @@ public class DepositCommandValidator extends Validator {
 
     public boolean validate(String command, String id, String amount, String extraArguments) {
         if (!commandChecker(command) || !idChecker(id) || !hasAccountWithIdCheck(id) || !Objects.equals(extraArguments, "")) {
-            invalidCommandsOutput.updateInvalidCommandsList(String.join(" ", command, id, amount, extraArguments));
             return false;
 
         } else {

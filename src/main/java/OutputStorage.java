@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class Output {
+public class OutputStorage {
     private static ArrayList<String> invalidCommandsOutput;
 
-    public Output() {
+    public OutputStorage() {
         invalidCommandsOutput = new ArrayList<String>();
     }
 
