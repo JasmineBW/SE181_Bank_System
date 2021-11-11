@@ -1,3 +1,5 @@
+package banking;
+
 public class CheckingCommandValidator extends CreateCommandValidator {
 
     public CheckingCommandValidator(Bank bank) {

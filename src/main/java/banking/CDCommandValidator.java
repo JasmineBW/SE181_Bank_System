@@ -1,3 +1,5 @@
+package banking;
+
 public class CDCommandValidator extends CreateCommandValidator {
 
     public CDCommandValidator(Bank bank) {

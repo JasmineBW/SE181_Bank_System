@@ -1,3 +1,5 @@
+package banking;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -92,25 +94,25 @@ public class AccountTest {
 
     @Test
     public void savings_account_cannot_be_overdrawn_from() {
-        System.out.println("Account balance is " + savings.getAccountBalance());
+        System.out.println("banking.Account balance is " + savings.getAccountBalance());
         savings.withdraw(200);
-        System.out.println("Account balance is " + savings.getAccountBalance());
+        System.out.println("banking.Account balance is " + savings.getAccountBalance());
         assertEquals(0, savings.getAccountBalance());
     }
 
     @Test
     public void checking_account_cannot_be_overdrawn_from() {
-        System.out.println("Account balance is " + checking.getAccountBalance());
+        System.out.println("banking.Account balance is " + checking.getAccountBalance());
         checking.withdraw(200);
-        System.out.println("Account balance is " + checking.getAccountBalance());
+        System.out.println("banking.Account balance is " + checking.getAccountBalance());
         assertEquals(0, checking.getAccountBalance());
     }
 
     @Test
     public void cd_account_cannot_be_overdrawn_from() {
-        System.out.println("Account balance is " + cd.getAccountBalance());
+        System.out.println("banking.Account balance is " + cd.getAccountBalance());
         cd.withdraw(200);
-        System.out.println("Account balance is " + cd.getAccountBalance());
+        System.out.println("banking.Account balance is " + cd.getAccountBalance());
         assertEquals(0, cd.getAccountBalance());
     }
 
