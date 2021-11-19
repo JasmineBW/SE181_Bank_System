@@ -28,11 +28,10 @@ public class DepositCommandValidator extends Validator {
                     CheckingCommandValidator checkingDepositCommandValidator = new CheckingCommandValidator(bank);
                     return checkingDepositCommandValidator.depositValidate(amount);
 
-                } else if (Objects.equals(accountType, "cd")) {
+                } else {
                     return false;
                 }
             }
         }
-        return false;
     }
 }
