@@ -37,6 +37,10 @@ public abstract class Account {
         return this.accountBalance;
     }
 
+    public void updateAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
 
     public double getAPR() {
         return this.APR;
