@@ -37,7 +37,7 @@ public class InputParser {
             extra = components[3];
             return components;
 
-        } else if (Objects.equals(command, "create")) {
+        } else if (Objects.equals(command, "transfer")) {
             split = input.split(" ", 5);
             String[] components = {command, idFrom, idTo, amount, extra};
             assignComponents(split, components);
@@ -47,7 +47,7 @@ public class InputParser {
             extra = components[4];
             return components;
 
-        } else if (Objects.equals(command, "create")) {
+        } else if (Objects.equals(command, "pass")) {
             split = input.split(" ", 3);
             String[] components = {command, months, extra};
             assignComponents(split, components);
