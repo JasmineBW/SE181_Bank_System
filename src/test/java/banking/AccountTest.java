@@ -116,4 +116,10 @@ public class AccountTest {
         assertEquals(0, cd.getAccountBalance());
     }
 
+    @Test
+    void pass_valid_amount_of_time() {
+        //input = "pass 12"
+
+    }
+
 }

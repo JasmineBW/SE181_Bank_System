@@ -57,4 +57,10 @@ public class Bank {
     public Account getAccount(int ID) {
         return accounts.get(ID);
     }
+
+    public void pass(int months) {
+        Clock.pass(months);
+        Map<Integer, Account> bank = getListOfAccounts();
+        Clock.accountUpdate(bank);
+    }
 }
