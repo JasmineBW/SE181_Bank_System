@@ -86,4 +86,23 @@ public class MasterControlTest {
 
         assertSingleCommand("deposit 24681012 500", actual);
     }
+
+    @Test
+    void invalid_to_pass_0_months() {
+        input.add("create savings 12345678 1.0");
+        input.add("pass 0");
+
+        List<String> actual = masterControl.start(input);
+
+        assertSingleCommand("pass 0", actual);
+    }
+
+    @Test
+    void typo_in_pass_command() {
+        input.add("passs 20");
+
+        List<String> actual = masterControl.start(input);
+
+        assertSingleCommand("passs 20", actual);
+    }
 }

@@ -22,7 +22,7 @@ public abstract class Validator {
     public static boolean idChecker(String id) {
         int integerId;
         try {
-            integerId = Integer.valueOf(id).intValue();
+            integerId = Integer.valueOf(id);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -37,7 +37,7 @@ public abstract class Validator {
     public static boolean aprChecker(String apr) {
         double doubleApr;
         try {
-            doubleApr = Double.valueOf(apr).doubleValue();
+            doubleApr = Double.valueOf(apr);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -51,7 +51,7 @@ public abstract class Validator {
     public static boolean amountChecker(String amount) {
         double doubleAmount;
         try {
-            doubleAmount = Double.valueOf(amount).doubleValue();
+            doubleAmount = Double.valueOf(amount);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -63,8 +63,23 @@ public abstract class Validator {
         }
     }
 
+    public static boolean monthChecker(String months) {
+        int integerMonth;
+        try {
+            integerMonth = Integer.valueOf(months);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if (integerMonth < 1 || integerMonth > 60) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public boolean hasAccountWithIdCheck(String id) {
-        int integerId = Integer.valueOf(id).intValue();
+        int integerId = Integer.valueOf(id);
         if (bank.containsIdNumber(integerId)) {
             return true;
         } else {

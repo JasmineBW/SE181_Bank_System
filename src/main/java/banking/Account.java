@@ -2,6 +2,7 @@ package banking;
 
 public abstract class Account {
     protected double accountBalance;
+    protected int longevity;
     private String type;
     private int ID;
     private double APR;
@@ -11,6 +12,7 @@ public abstract class Account {
         this.ID = ID;
         this.APR = APR;
         this.accountBalance = 0;
+        this.longevity = 0;
     }
 
     public void deposit(double amount) {
@@ -41,9 +43,12 @@ public abstract class Account {
         this.accountBalance = accountBalance;
     }
 
-
     public double getAPR() {
         return this.APR;
+    }
+
+    public int getLongevity() {
+        return longevity;
     }
 }
 

@@ -16,6 +16,7 @@ public class InputParser {
     public static String[] split(String input) {
         String split[] = input.split(" ", 0);
         command = split[0].toLowerCase();
+        extra = "";
 
         if (Objects.equals(command, "create")) {
             split = input.split(" ", 6);

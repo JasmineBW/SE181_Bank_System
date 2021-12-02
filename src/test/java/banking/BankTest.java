@@ -211,5 +211,30 @@ public class BankTest {
         bank.withdraw(CD_ID, 500);
         assertTrue(bank.getListOfAccounts().get(CD_ID).getAccountBalance() == 0);
     }
+
+    @Test
+    public void pass_increments_months_passed() {
+        bank.pass(5);
+        assertTrue(bank.clock.getMonthsPassed() == 5);
+    }
+
+    @Test
+    public void checking_and_savings_account_accrue_APR_over_months() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(CHECKING_ID, 200);
+        bank.deposit(SAVINGS_ID, 100);
+        bank.pass(5);
+        assertTrue(bank.getAccount(CHECKING_ID).getAccountBalance() > 200);
+        assertTrue(bank.getAccount(SAVINGS_ID).getAccountBalance() > 100);
+    }
+
+    @Test
+    public void cd_account_accrue_APR_over_months() {
+        bank.create(CD, CD_ID, 2.3, 500);
+        bank.pass(10);
+        System.out.println(bank.getAccount(CD_ID).getAccountBalance());
+        assertTrue(bank.getAccount(CD_ID).getAccountBalance() > 500);
+    }
 }
 

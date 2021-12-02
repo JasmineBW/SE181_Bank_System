@@ -23,30 +23,39 @@ public class MasterControl {
 
     public ArrayList start(List<String> input) {
         for (String command : input) {
-
+            String[] components = InputParser.split(command);
             String split[] = command.split(" ", 0);
 
-            if (Validator.commandChecker(split[0])) {
+            if (Validator.commandChecker(InputParser.getCommand())) {
 
-                if (Objects.equals(split[0], "create")) {
-                    if (split.length == 5 && createCommandValidator.validate(split[0], split[1], split[2], split[3], split[4], "")) {
-                        commandProcessor.process(split[0], split[1], split[2], split[3], split[4]);
-                    } else if (split.length == 4 && createCommandValidator.validate(split[0], split[1], split[2], split[3], "", "")) {
-                        commandProcessor.process(split[0], split[1], split[2], split[3]);
+                if (Objects.equals(InputParser.getCommand(), "create") && createCommandValidator.validate(InputParser.command,
+                        InputParser.accountType, InputParser.id, InputParser.apr, InputParser.amount, InputParser.extra)) {
+
+                    if (Objects.equals(InputParser.accountType, "cd")) {
+                        commandProcessor.process(InputParser.command, InputParser.accountType, InputParser.id,
+                                InputParser.apr, InputParser.amount);
+
                     } else {
-                        outputStorage.updateInvalidCommandsList(command);
+                        commandProcessor.process(InputParser.command, InputParser.accountType, InputParser.id,
+                                InputParser.apr);
                     }
 
-                } else if (Objects.equals(split[0], "deposit") && depositCommandValidator.validate(split[0], split[1], split[2], "")) {
-                    commandProcessor.process(split[0], split[1], split[2]);
+                } else if (Objects.equals(InputParser.getCommand(), "deposit") && depositCommandValidator.validate(InputParser.command,
+                        InputParser.id, InputParser.amount, InputParser.extra)) {
+                    commandProcessor.process(InputParser.command, InputParser.id, InputParser.amount);
+
+                } else if (Objects.equals(InputParser.getCommand(), "pass") && PassCommandValidator.validate(InputParser.command,
+                        InputParser.months, InputParser.extra)) {
+                    commandProcessor.process(InputParser.command, InputParser.months);
+
                 } else {
                     outputStorage.updateInvalidCommandsList(command);
                 }
-            } else {
+
+            } else { //for invalid command storage after general command validation
                 outputStorage.updateInvalidCommandsList(command);
             }
         }
-
         return outputStorage.accessInvalidOutputList();
     }
 }

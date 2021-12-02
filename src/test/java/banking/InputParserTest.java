@@ -29,7 +29,7 @@ public class InputParserTest {
     void extra_arguments_correctly_labelled() {
         input = "withdraw 23456789 400 2000";
         components = InputParser.split(input);
-        assertEquals("2000", InputParser.getAmount());
+        assertEquals("2000", InputParser.getExtra());
     }
 
     @Test

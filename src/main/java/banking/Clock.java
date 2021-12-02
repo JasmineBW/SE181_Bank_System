@@ -7,14 +7,18 @@ import java.util.Set;
 public class Clock {
 
     public static int monthsPassed = 0;
-    static int minimum_balance_fee = 25;
-    static Account account;
-    static APRCalculator calculator = new APRCalculator();
-    static Set<Map.Entry<Integer, Account>> accountEntries;
-    static Iterator<Map.Entry<Integer, Account>> iterator;
-    private static double initial_account_balance, newBalance;
+    final int minimum_balance_fee = 25;
+    Account account;
+    APRCalculator calculator = new APRCalculator();
+    Set<Map.Entry<Integer, Account>> accountEntries;
+    Iterator<Map.Entry<Integer, Account>> iterator;
+    private double initial_account_balance, newBalance;
 
-    public static void pass(int months, Map<Integer, Account> bank) {
+    int getMonthsPassed() {
+        return Clock.monthsPassed;
+    }
+
+    public void pass(int months, Map<Integer, Account> bank) {
         monthsPassed += months;
         int iters;
         for (iters = 0; iters < months; iters++) {
@@ -22,13 +26,14 @@ public class Clock {
         }
     }
 
-    public static void accountUpdate(Map<Integer, Account> bank) {
+    public void accountUpdate(Map<Integer, Account> bank) {
         accountEntries = bank.entrySet();
         iterator = accountEntries.iterator();
 
         while (iterator.hasNext()) {
             Map.Entry<Integer, Account> accountEntry = iterator.next();
             account = accountEntry.getValue();
+            account.longevity++;
             initial_account_balance = account.getAccountBalance();
             if (initial_account_balance == 0.0) {
                 iterator.remove();
@@ -41,6 +46,7 @@ public class Clock {
                     newBalance = initial_account_balance - minimum_balance_fee;
                 }
                 account.updateAccountBalance(newBalance);
+
                 if (account.getAccountType() == "cd") {
                     calculator.CDCalculateAPR(account);
                 } else {

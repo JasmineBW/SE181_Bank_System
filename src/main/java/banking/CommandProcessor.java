@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class CommandProcessor {
     private static Bank bank;
-    private int ID;
+    private int ID, months;
     private Double APR;
     private Double amount;
 
@@ -42,6 +42,13 @@ public class CommandProcessor {
         amount = Double.valueOf(Amount);
         if (Objects.equals(command, "deposit")) {
             bank.deposit(ID, amount);
+        }
+    }
+
+    public void process(String command, String Months) {
+        months = Integer.valueOf(Months);
+        if (Objects.equals(command, "pass")) {
+            bank.pass(months);
         }
     }
 }

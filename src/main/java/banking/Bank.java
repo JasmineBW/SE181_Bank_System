@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
+    protected Clock clock = new Clock();
     private Map<Integer, Account> accounts;
 
     public Bank() {
@@ -60,6 +61,6 @@ public class Bank {
 
     public void pass(int months) {
         Map<Integer, Account> bank = getListOfAccounts();
-        Clock.pass(months, bank);
+        clock.pass(months, bank);
     }
 }

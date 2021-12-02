@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CommandProcessorTest {
+    Clock clock;
     private String userInput;
     private Bank bank;
     private String command;
@@ -14,12 +15,14 @@ public class CommandProcessorTest {
     private String id;
     private String apr;
     private String amount;
+    private String months;
     private CommandProcessor commandProcessor;
 
     @BeforeEach
     void setUp() {
         bank = new Bank();
         commandProcessor = new CommandProcessor(bank);
+        clock = new Clock();
     }
 
     @Test
@@ -29,7 +32,6 @@ public class CommandProcessorTest {
         id = "12345678";
         apr = "1.0";
         commandProcessor.process(command, accountType, id, apr);
-        System.out.println(bank.getListOfAccounts());
         assertTrue(bank.containsIdNumber(12345678));
         assertEquals(1.0, bank.getAccount(12345678).getAPR());
     }
@@ -66,5 +68,13 @@ public class CommandProcessorTest {
         bank.create("checking", 24681012, 2);
         commandProcessor.process(command, id, amount);
         assertEquals(20, bank.getAccount(24681012).getAccountBalance());
+    }
+
+    @Test
+    public void valid_pass_command() {
+        command = "pass";
+        months = "25";
+        commandProcessor.process(command, months);
+        assertEquals(25, bank.clock.getMonthsPassed());
     }
 }
