@@ -133,7 +133,7 @@ public class CreateCommandValidatorTest {
 
     @Test
     public void create_an_account_with_an_id_already_in_bank() {
-        bank.create("cd", 00000001, 1.43, 1500);
+        bank.create("cd", 00000001, 1.43f, 1500);
         apr = "0.55432";
         amount = "2000";
         output = createCommandValidator.validate(command, accountTypeCD, idCD, apr, amount, extra);

@@ -129,7 +129,7 @@ public class BankTest {
     public void savings_account_in_bank_can_be_withdrawn_from() {
         bank.create(SAVINGS, SAVINGS_ID, APR);
         bank.deposit(SAVINGS_ID, 2);
-        bank.withdraw(SAVINGS_ID, 2.5);
+        bank.withdraw(SAVINGS_ID, 2.5f);
         assertEquals(0, bank.getListOfAccounts().get(SAVINGS_ID).getAccountBalance());
     }
 
@@ -137,7 +137,7 @@ public class BankTest {
     public void savings_account_can_be_withdrawn_twice_from() {
         bank.create(SAVINGS, SAVINGS_ID, APR);
         bank.deposit(SAVINGS_ID, 2);
-        bank.withdraw(SAVINGS_ID, 2.5);
+        bank.withdraw(SAVINGS_ID, 2.5f);
         bank.withdraw(SAVINGS_ID, 50);
         assertEquals(0, bank.getListOfAccounts().get(SAVINGS_ID).getAccountBalance());
     }

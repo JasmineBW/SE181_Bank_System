@@ -52,7 +52,7 @@ public class CommandProcessorTest {
         command = "deposit";
         id = "12345678";
         amount = "200";
-        bank.create("savings", 12345678, 1.5);
+        bank.create("savings", 12345678, 1.5f);
         bank.deposit(12345678, 300);
         commandProcessor.process(command, id, amount);
         assertEquals(500, bank.getAccount(12345678).getAccountBalance());

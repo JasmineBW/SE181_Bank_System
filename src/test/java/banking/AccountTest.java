@@ -22,15 +22,14 @@ public class AccountTest {
 
     @BeforeEach
     void setUp() {
-        savings = new SavingsAccount("savings", SAVINGS_ID, 0.2);
-        cd = new CDAccount("cd", 01234567, 1.2, 0);
-        checking = new CheckingAccount("checking", 87654321, 1.2);
-        //List<String> createdAccountsForTesting = List.of("savings", "checking", "cd");
+        savings = new SavingsAccount("savings", SAVINGS_ID, 0.2f);
+        cd = new CDAccount("cd", 01234567, 1.2f, 0);
+        checking = new CheckingAccount("checking", 87654321, 1.2f);
     }
 
     @Test
     public void creating_new_savings_account() {
-        SavingsAccount savings = new SavingsAccount("savings", SAVINGS_ID, 0.2);
+        SavingsAccount savings = new SavingsAccount("savings", SAVINGS_ID, 0.2f);
         //assertEquals(SAVINGS_ID, savings.getID());
         assertEquals(0.2, savings.getAPR());
         assertTrue(approvedAccounts.contains(savings.getAccountType()));
@@ -38,7 +37,7 @@ public class AccountTest {
 
     @Test
     public void creating_new_checking_account() {
-        CheckingAccount checking = new CheckingAccount("checking", 87654321, 1.2);
+        CheckingAccount checking = new CheckingAccount("checking", 87654321, 1.2f);
         //assertEquals(CHECKING_ID, checking.getID());
         assertEquals(1.2, checking.getAPR());
         assertTrue(approvedAccounts.contains(checking.getAccountType()));
@@ -46,7 +45,7 @@ public class AccountTest {
 
     @Test
     public void creating_new_cd_account() {
-        CDAccount cd = new CDAccount("cd", 01234567, 1.2, 2000);
+        CDAccount cd = new CDAccount("cd", 01234567, 1.2f, 2000);
         //assertEquals(CD_ID, cd.getID());
         assertEquals(1.2, cd.getAPR());
         assertEquals(2000, cd.getAccountBalance());
