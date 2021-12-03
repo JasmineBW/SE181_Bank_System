@@ -13,17 +13,14 @@ public class Clock {
     Set<Map.Entry<Integer, Account>> accountEntries;
     Iterator<Map.Entry<Integer, Account>> iterator;
     private double initial_account_balance, newBalance;
+    private int Months;
 
     int getMonthsPassed() {
         return Clock.monthsPassed;
     }
 
     public void pass(int months, Map<Integer, Account> bank) {
-
-        if (account.getAccountType() == "savings") {
-            account.availableWithdrawals += months;
-        }
-
+        Months = months;
         monthsPassed += months;
         int iters;
         for (iters = 0; iters < months; iters++) {
@@ -64,6 +61,10 @@ public class Clock {
                 } else {
                     calculator.calculateApr(account);
                 }
+            }
+
+            if (account.getAccountType() == "savings") {
+                account.availableWithdrawals += Months;
             }
 
         }

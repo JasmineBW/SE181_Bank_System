@@ -3,8 +3,7 @@ package banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WithdrawCommandValidatorTest {
     Bank bank;
@@ -13,6 +12,7 @@ public class WithdrawCommandValidatorTest {
     private String id;
     private String idSavings = "12345678";
     private String idChecking = "23478902";
+    private String idCd = "00000001";
     private String amount;
     private String extraArguments = "";
     private boolean output;
@@ -38,6 +38,30 @@ public class WithdrawCommandValidatorTest {
         amount = "20";
         output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
         assertTrue(output);
+    }
+
+    @Test
+    void valid_cd_withdraw_command_entered() {
+        bank.pass(13);
+        amount = String.valueOf(bank.getAccount(00000001).getAccountBalance());
+        output = withdrawCommandValidator.validate(command, idCd, amount, extraArguments);
+        assertTrue(output);
+    }
+
+    @Test
+    void withdraw_from_cd_account_not_open_for_12_months() {
+        bank.pass(5);
+        amount = String.valueOf(bank.getAccount(00000001).getAccountBalance());
+        output = withdrawCommandValidator.validate(command, idCd, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void withdraw_part_of_balance_from_cd_open_for_12_months() {
+        bank.pass(12);
+        amount = "200";
+        output = withdrawCommandValidator.validate(command, idCd, amount, extraArguments);
+        assertFalse(output);
     }
 
     @Test
@@ -105,4 +129,46 @@ public class WithdrawCommandValidatorTest {
         output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
         assertTrue(output);
     }
+
+    @Test
+    void command_argument_is_omitted_when_entered() {
+        command = "23478902";
+        id = "267";
+        amount = "";
+        output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void id_argument_is_omitted_when_entered() {
+        id = "267";
+        amount = "";
+        output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void amount_argument_is_omitted_when_entered() {
+        amount = "";
+        output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void extra_arguments_entered() {
+        amount = "500";
+        extraArguments = "savings";
+        output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void withdraw_more_than_account_balance() {
+        bank.deposit(12345678, 400);
+        amount = "401";
+        output = withdrawCommandValidator.validate(command, idSavings, amount, extraArguments);
+        assertTrue(output);
+        assertEquals(0, bank.getAccount(12345678).getAccountBalance());
+    }
+
 }

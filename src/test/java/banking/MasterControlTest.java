@@ -88,6 +88,38 @@ public class MasterControlTest {
     }
 
     @Test
+    void typo_in_withdraw_command() {
+        input.add("create savings 12345678 1.0");
+        input.add("deposit 12345678 200");
+        input.add("wittdraw 12345678 20");
+
+        List<String> actual = masterControl.start(input);
+
+        assertSingleCommand("wittdraw 12345678 20", actual);
+    }
+
+    @Test
+    void invalid_to_withdraw_more_than_once_from_savings_account_in_a_month() {
+        input.add("create savings 12345678 1.0");
+        input.add("deposit 12345678 200");
+        input.add("withdraw 12345678 20");
+        input.add("withdraw 12345678 50");
+
+        List<String> actual = masterControl.start(input);
+
+        assertSingleCommand("withdraw 12345678 50", actual);
+    }
+
+    @Test
+    void invalid_to_withdraw_from_account_that_doesnt_exist() {
+        input.add("withdraw 12345678 20");
+
+        List<String> actual = masterControl.start(input);
+
+        assertSingleCommand("withdraw 12345678 20", actual);
+    }
+
+    @Test
     void invalid_to_pass_0_months() {
         input.add("create savings 12345678 1.0");
         input.add("pass 0");

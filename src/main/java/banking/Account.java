@@ -1,5 +1,7 @@
 package banking;
 
+import java.util.Objects;
+
 public abstract class Account {
     protected double accountBalance;
     protected int longevity;
@@ -28,7 +30,7 @@ public abstract class Account {
             this.accountBalance -= amount;
         }
 
-        if (this.type == "savings") {
+        if (Objects.equals(type, "savings")) {
             availableWithdrawals--;
         }
     }
