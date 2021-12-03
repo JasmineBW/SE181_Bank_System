@@ -60,7 +60,6 @@ public class MasterControl {
 
                 } else if (Objects.equals(InputParser.getCommand(), "pass") && PassCommandValidator.validate(InputParser.command,
                         InputParser.months, InputParser.extra)) {
-                    bank.getAccount(Integer.valueOf(InputParser.id)).validCommandsStorage.add(command);
                     commandProcessor.process(InputParser.command, InputParser.months);
 
                 } else {

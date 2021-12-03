@@ -8,6 +8,7 @@ public abstract class Account {
     protected int longevity;
     protected int availableWithdrawals;
     protected ArrayList validCommandsStorage;
+    String input = "";
     private String type;
     private int ID;
     private double APR;
@@ -65,9 +66,6 @@ public abstract class Account {
         return longevity;
     }
 
-    public void updateAvailableWithdrawals() {
-
-    }
 }
 
 

@@ -12,18 +12,20 @@ public class MasterControlTest {
 
     MasterControl masterControl;
     List<String> input;
+    OutputStorage outputStorage;
 
     @BeforeEach
     void setUp() {
         input = new ArrayList<>();
         Bank bank = new Bank();
+        outputStorage = new OutputStorage(bank);
         masterControl = new MasterControl(bank, new CreateCommandValidator(bank), new DepositCommandValidator(bank),
-                new WithdrawCommandValidator(bank), new TransferCommandValidator(bank), new CommandProcessor(bank), new OutputStorage(bank));
+                new WithdrawCommandValidator(bank), new TransferCommandValidator(bank), new CommandProcessor(bank), outputStorage);
     }
 
     private void assertSingleCommand(String command, List<String> actual) {
-        assertEquals(1, actual.size());
-        assertEquals(command, actual.get(0));
+        assertEquals(1, outputStorage.accessInvalidOutputList().size());
+        assertEquals(command, outputStorage.accessInvalidOutputList().get(0));
     }
 
     @Test
@@ -33,7 +35,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("creat checking 12345678 1.0", actual);
+        assertSingleCommand("creat checking 12345678 1.0", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -42,7 +44,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("depositt 12345678 100", actual);
+        assertSingleCommand("depositt 12345678 100", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -52,9 +54,9 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertEquals(2, actual.size());
-        assertEquals("creat checking 12345678 1.0", actual.get(0));
-        assertEquals("depositt 12345678 100", actual.get(1));
+        assertEquals(2, outputStorage.accessInvalidOutputList().size());
+        assertEquals("creat checking 12345678 1.0", outputStorage.accessInvalidOutputList().get(0));
+        assertEquals("depositt 12345678 100", outputStorage.accessInvalidOutputList().get(1));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("create checking 12345678 1.0", actual);
+        assertSingleCommand("create checking 12345678 1.0", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -74,7 +76,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("deposit 00000001 200", actual);
+        assertSingleCommand("deposit 00000001 200", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -84,7 +86,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("deposit 24681012 500", actual);
+        assertSingleCommand("deposit 24681012 500", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -95,7 +97,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("wittdraw 12345678 20", actual);
+        assertSingleCommand("wittdraw 12345678 20", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -107,7 +109,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("withdraw 12345678 50", actual);
+        assertSingleCommand("withdraw 12345678 50", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -116,7 +118,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("withdraw 12345678 20", actual);
+        assertSingleCommand("withdraw 12345678 20", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -128,7 +130,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("tranfer 12345678 24681012 67", actual);
+        assertSingleCommand("tranfer 12345678 24681012 67", outputStorage.accessInvalidOutputList());
     }
 
 
@@ -141,7 +143,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("transfer 12345678 12345678 200", actual);
+        assertSingleCommand("transfer 12345678 12345678 200", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -154,7 +156,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("transfer 12345678 24681012 50", actual);
+        assertSingleCommand("transfer 12345678 24681012 50", outputStorage.accessInvalidOutputList());
     }
 
     @Test
@@ -167,7 +169,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        //assertEquals(0, actual.size());
+        assertEquals(0, outputStorage.accessInvalidOutputList().size());
     }
 
     @Test
@@ -182,9 +184,9 @@ public class MasterControlTest {
         System.out.println(actual);
 
 
-        //assertEquals(2, actual.size());
-        //assertEquals("transfer 24681012 10000001 500", actual.get(0));
-        //assertEquals("transfer 10000001 24681012 100", actual.get(1));
+        assertEquals(2, outputStorage.accessInvalidOutputList().size());
+        assertEquals("transfer 24681012 10000001 500", outputStorage.accessInvalidOutputList().get(0));
+        assertEquals("transfer 10000001 24681012 100", outputStorage.accessInvalidOutputList().get(1));
     }
 
     @Test
@@ -194,7 +196,7 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("pass 0", actual);
+        assertSingleCommand("pass 0", outputStorage.accessInvalidOutputList());
     }
 
 
@@ -204,6 +206,27 @@ public class MasterControlTest {
 
         List<String> actual = masterControl.start(input);
 
-        assertSingleCommand("passs 20", actual);
+        assertSingleCommand("passs 20", outputStorage.accessInvalidOutputList());
+    }
+
+    @Test
+    void sample_make_sure_this_passes_unchanged_or_you_will_fail() {
+        input.add("Create savings 12345678 0.6");
+        input.add("Deposit 12345678 700");
+        input.add("Deposit 12345678 5000");
+        input.add("creAte cHecKing 98765432 0.01");
+        input.add("Deposit 98765432 300");
+        input.add("Transfer 98765432 12345678 300");
+        input.add("Pass 1");
+        input.add("Create cd 23456789 1.2 2000");
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(5, actual.size());
+        assertEquals("Savings 12345678 1000.50 0.60", actual.get(0));
+        assertEquals("Deposit 12345678 700", actual.get(1));
+        assertEquals("Transfer 98765432 12345678 300", actual.get(2));
+        assertEquals("Cd 23456789 2000.00 1.20", actual.get(3));
+        assertEquals("Deposit 12345678 5000", actual.get(4));
+        System.out.println(actual);
     }
 }

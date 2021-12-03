@@ -25,7 +25,6 @@ public class Bank {
             newAccount = new CheckingAccount(type, ID, APR);
             accounts.put(ID, newAccount);
         }
-        newAccount.validCommandsStorage.add(type + " " + ID + " " + newAccount.getAccountBalance() + " " + newAccount.getAPR());
     }
 
     public void create(String type, int ID, double APR, double amount) {
@@ -33,7 +32,6 @@ public class Bank {
             newAccount = new CDAccount(type, ID, APR, amount);
             accounts.put(ID, newAccount);
         }
-        newAccount.validCommandsStorage.add(type + " " + ID + " " + newAccount.getAccountBalance() + " " + newAccount.getAPR());
     }
 
     public void deposit(int ID, double amount) {
