@@ -16,10 +16,6 @@ public class TransferCommandValidator extends Validator {
     public boolean validate(String command, String idFrom, String idTo, String amount, String extra) {
         if (!commandChecker(command) || !idChecker(idFrom) || !idChecker(idTo) || !hasAccountWithIdCheck(idFrom) ||
                 !hasAccountWithIdCheck(idTo) || !Objects.equals(extra, "") || Objects.equals(idTo, idFrom)) {
-
-
-            System.out.println(commandChecker(command) + " " + idChecker(idFrom) + idChecker(idTo) + " " + hasAccountWithIdCheck(idFrom) +
-                    " " + hasAccountWithIdCheck(idTo) + Objects.equals(extra, "") + Objects.equals(idTo, idFrom));
             return false;
 
         } else {

@@ -30,7 +30,6 @@ public class MasterControl {
             String[] components = InputParser.split(command);
 
             if (Validator.commandChecker(InputParser.getCommand())) {
-
                 if (Objects.equals(InputParser.getCommand(), "create") && createCommandValidator.validate(InputParser.command,
                         InputParser.accountType, InputParser.id, InputParser.apr, InputParser.amount, InputParser.extra)) {
 
@@ -45,18 +44,23 @@ public class MasterControl {
 
                 } else if (Objects.equals(InputParser.getCommand(), "deposit") && depositCommandValidator.validate(InputParser.command,
                         InputParser.id, InputParser.amount, InputParser.extra)) {
+                    bank.getAccount(Integer.valueOf(InputParser.id)).validCommandsStorage.add(command);
                     commandProcessor.process(InputParser.command, InputParser.id, InputParser.amount);
 
                 } else if (Objects.equals(InputParser.getCommand(), "withdraw") && withdrawCommandValidator.validate(InputParser.command,
                         InputParser.id, InputParser.amount, InputParser.extra)) {
+                    bank.getAccount(Integer.valueOf(InputParser.id)).validCommandsStorage.add(command);
                     commandProcessor.process(InputParser.command, InputParser.id, InputParser.amount);
 
                 } else if (Objects.equals(InputParser.getCommand(), "transfer") && transferCommandValidator.validate(InputParser.command,
                         InputParser.idFrom, InputParser.idTo, InputParser.amount, InputParser.extra)) {
+                    bank.getAccount(Integer.valueOf(InputParser.idFrom)).validCommandsStorage.add(command);
+                    bank.getAccount(Integer.valueOf(InputParser.idTo)).validCommandsStorage.add(command);
                     commandProcessor.transferProcess(InputParser.command, InputParser.idFrom, InputParser.idTo, InputParser.amount);
 
                 } else if (Objects.equals(InputParser.getCommand(), "pass") && PassCommandValidator.validate(InputParser.command,
                         InputParser.months, InputParser.extra)) {
+                    bank.getAccount(Integer.valueOf(InputParser.id)).validCommandsStorage.add(command);
                     commandProcessor.process(InputParser.command, InputParser.months);
 
                 } else {
@@ -68,6 +72,6 @@ public class MasterControl {
                 outputStorage.updateInvalidCommandsList(command);
             }
         }
-        return outputStorage.accessInvalidOutputList();
+        return outputStorage.accessOutputsList(bank);
     }
 }

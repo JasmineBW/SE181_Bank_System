@@ -1,6 +1,6 @@
 package banking;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bank {
@@ -10,7 +10,7 @@ public class Bank {
     private Map<Integer, Account> accounts;
 
     public Bank() {
-        accounts = new HashMap<>();
+        accounts = new LinkedHashMap<>();
     }
 
     public Map<Integer, Account> getListOfAccounts() {
@@ -25,6 +25,7 @@ public class Bank {
             newAccount = new CheckingAccount(type, ID, APR);
             accounts.put(ID, newAccount);
         }
+        newAccount.validCommandsStorage.add(type + " " + ID + " " + newAccount.getAccountBalance() + " " + newAccount.getAPR());
     }
 
     public void create(String type, int ID, double APR, double amount) {
@@ -32,6 +33,7 @@ public class Bank {
             newAccount = new CDAccount(type, ID, APR, amount);
             accounts.put(ID, newAccount);
         }
+        newAccount.validCommandsStorage.add(type + " " + ID + " " + newAccount.getAccountBalance() + " " + newAccount.getAPR());
     }
 
     public void deposit(int ID, double amount) {

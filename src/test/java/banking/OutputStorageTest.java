@@ -11,6 +11,7 @@ public class OutputStorageTest extends Validator {
     Bank bank = new Bank();
     CreateCommandValidator createCommandValidator = new CreateCommandValidator(bank);
     DepositCommandValidator depositCommandValidator = new DepositCommandValidator(bank);
+    OutputStorage outputStorage = new OutputStorage(bank);
     private String command;
     private String accountType;
     private String id;
@@ -30,9 +31,9 @@ public class OutputStorageTest extends Validator {
         userInput = String.join(" ", command, accountType, id, apr, amount, extra);
         boolean output = createCommandValidator.validate(command, accountType, id, apr, amount, extra);
         if (!output) {
-            invalidCommandsOutput.updateInvalidCommandsList(userInput);
+            outputStorage.updateInvalidCommandsList(userInput);
         }
-        assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput));
+        assertTrue(outputStorage.accessInvalidOutputList().contains(userInput));
 
     }
 
@@ -45,9 +46,9 @@ public class OutputStorageTest extends Validator {
         userInput = String.join(" ", command, id, amount, extra);
         boolean output = depositCommandValidator.validate(command, id, amount, extra);
         if (!output) {
-            invalidCommandsOutput.updateInvalidCommandsList(userInput);
+            outputStorage.updateInvalidCommandsList(userInput);
         }
-        assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput));
+        assertTrue(outputStorage.accessInvalidOutputList().contains(userInput));
 
     }
 
@@ -70,14 +71,14 @@ public class OutputStorageTest extends Validator {
         boolean output1 = depositCommandValidator.validate(command, id, amount, extra);
 
         if (!output) {
-            invalidCommandsOutput.updateInvalidCommandsList(userInput);
+            outputStorage.updateInvalidCommandsList(userInput);
         }
 
         if (!output1) {
-            invalidCommandsOutput.updateInvalidCommandsList(userInput1);
+            outputStorage.updateInvalidCommandsList(userInput1);
         }
-        assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput));
-        assertTrue(invalidCommandsOutput.accessInvalidOutputList().contains(userInput1));
+        assertTrue(outputStorage.accessInvalidOutputList().contains(userInput));
+        assertTrue(outputStorage.accessInvalidOutputList().contains(userInput1));
 
 
     }

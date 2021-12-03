@@ -1,11 +1,13 @@
 package banking;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Account {
     protected double accountBalance, funds;
     protected int longevity;
     protected int availableWithdrawals;
+    protected ArrayList validCommandsStorage;
     private String type;
     private int ID;
     private double APR;
@@ -17,6 +19,7 @@ public abstract class Account {
         this.accountBalance = 0;
         this.longevity = 0;
         this.availableWithdrawals = 1;
+        this.validCommandsStorage = new ArrayList();
     }
 
     public void deposit(double amount) {

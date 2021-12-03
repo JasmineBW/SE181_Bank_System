@@ -20,6 +20,7 @@ public class CommandProcessor {
         if (Objects.equals(command, "create")) {
             if (Objects.equals(accountType, "savings") || Objects.equals(accountType, "checking")) {
                 bank.create(accountType, ID, APR);
+
             }
         }
     }

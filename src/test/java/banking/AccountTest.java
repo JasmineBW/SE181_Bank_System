@@ -22,14 +22,14 @@ public class AccountTest {
 
     @BeforeEach
     void setUp() {
-        savings = new SavingsAccount("savings", SAVINGS_ID, 0.2f);
+        savings = new SavingsAccount("savings", SAVINGS_ID, 0.2);
         cd = new CDAccount("cd", 01234567, 1.2f, 0);
-        checking = new CheckingAccount("checking", 87654321, 1.2f);
+        checking = new CheckingAccount("checking", 87654321, 1.2);
     }
 
     @Test
     public void creating_new_savings_account() {
-        SavingsAccount savings = new SavingsAccount("savings", SAVINGS_ID, 0.2f);
+        SavingsAccount savings = new SavingsAccount("savings", SAVINGS_ID, 0.2);
         //assertEquals(SAVINGS_ID, savings.getID());
         assertEquals(0.2, savings.getAPR());
         assertTrue(approvedAccounts.contains(savings.getAccountType()));
@@ -37,7 +37,7 @@ public class AccountTest {
 
     @Test
     public void creating_new_checking_account() {
-        CheckingAccount checking = new CheckingAccount("checking", 87654321, 1.2f);
+        CheckingAccount checking = new CheckingAccount("checking", 87654321, 1.2);
         //assertEquals(CHECKING_ID, checking.getID());
         assertEquals(1.2, checking.getAPR());
         assertTrue(approvedAccounts.contains(checking.getAccountType()));
@@ -45,7 +45,7 @@ public class AccountTest {
 
     @Test
     public void creating_new_cd_account() {
-        CDAccount cd = new CDAccount("cd", 01234567, 1.2f, 2000);
+        CDAccount cd = new CDAccount("cd", 01234567, 1.2, 2000);
         //assertEquals(CD_ID, cd.getID());
         assertEquals(1.2, cd.getAPR());
         assertEquals(2000, cd.getAccountBalance());
@@ -113,12 +113,6 @@ public class AccountTest {
         cd.withdraw(200);
         System.out.println("banking.Account balance is " + cd.getAccountBalance());
         assertEquals(0, cd.getAccountBalance());
-    }
-
-    @Test
-    void pass_valid_amount_of_time() {
-        //input = "pass 12"
-
     }
 
 }
