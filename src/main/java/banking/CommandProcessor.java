@@ -42,6 +42,8 @@ public class CommandProcessor {
         amount = Double.valueOf(Amount);
         if (Objects.equals(command, "deposit")) {
             bank.deposit(ID, amount);
+        } else if (Objects.equals(command, "withdraw")) {
+            bank.withdraw(ID, amount);
         }
     }
 

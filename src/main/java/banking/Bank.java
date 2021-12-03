@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Bank {
     protected Clock clock = new Clock();
+    private Account newAccount, retrievedAccount;
     private Map<Integer, Account> accounts;
 
     public Bank() {
@@ -17,28 +18,28 @@ public class Bank {
 
     public void create(String type, int ID, double APR) {
         if (type.equals("savings")) {
-            Account newAccount = new SavingsAccount(type, ID, APR);
+            newAccount = new SavingsAccount(type, ID, APR);
             accounts.put(ID, newAccount);
         } else if (type.equals("checking")) {
-            Account newAccount = new CheckingAccount(type, ID, APR);
+            newAccount = new CheckingAccount(type, ID, APR);
             accounts.put(ID, newAccount);
         }
     }
 
     public void create(String type, int ID, double APR, double amount) {
         if (type.equals("cd")) {
-            Account newAccount = new CDAccount(type, ID, APR, amount);
+            newAccount = new CDAccount(type, ID, APR, amount);
             accounts.put(ID, newAccount);
         }
     }
 
     public void deposit(int ID, double amount) {
-        Account retrievedAccount = accounts.get(ID);
+        retrievedAccount = accounts.get(ID);
         retrievedAccount.deposit(amount);
     }
 
     public void withdraw(int ID, double amount) {
-        Account retrievedAccount = accounts.get(ID);
+        retrievedAccount = accounts.get(ID);
         retrievedAccount.withdraw(amount);
     }
 
@@ -51,7 +52,7 @@ public class Bank {
     }
 
     public String getAccountType(int ID) {
-        Account retrievedAccount = accounts.get(ID);
+        retrievedAccount = accounts.get(ID);
         return retrievedAccount.getAccountType();
     }
 

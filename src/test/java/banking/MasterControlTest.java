@@ -17,8 +17,8 @@ public class MasterControlTest {
     void setUp() {
         input = new ArrayList<>();
         Bank bank = new Bank();
-        masterControl = new MasterControl(bank, new CreateCommandValidator(bank), new DepositCommandValidator(bank)
-                , new CommandProcessor(bank), new OutputStorage());
+        masterControl = new MasterControl(bank, new CreateCommandValidator(bank), new DepositCommandValidator(bank),
+                new WithdrawCommandValidator(bank), new CommandProcessor(bank), new OutputStorage());
     }
 
     private void assertSingleCommand(String command, List<String> actual) {

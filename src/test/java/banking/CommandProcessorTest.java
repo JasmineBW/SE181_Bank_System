@@ -77,4 +77,15 @@ public class CommandProcessorTest {
         commandProcessor.process(command, months);
         assertEquals(25, bank.clock.getMonthsPassed());
     }
+
+    @Test
+    public void valid_withdraw_command() {
+        bank.create("checking", 24681012, 5);
+        bank.deposit(24681012, 100);
+        command = "withdraw";
+        id = "24681012";
+        amount = "20";
+        commandProcessor.process(command, id, amount);
+        assertEquals(80, bank.getAccount(24681012).getAccountBalance());
+    }
 }

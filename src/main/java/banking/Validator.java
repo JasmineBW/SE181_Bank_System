@@ -5,7 +5,7 @@ import java.util.List;
 public abstract class Validator {
 
     private static final List<String> approvedAccounts = List.of("savings", "checking", "cd");
-    private static List<String> approvedCommands = List.of("create", "deposit", "withdrawal", "transfer", "pass", "output");
+    private static List<String> approvedCommands = List.of("create", "deposit", "withdraw", "transfer", "pass", "output");
     public OutputStorage invalidCommandsOutput = new OutputStorage();
     protected Bank bank;
 

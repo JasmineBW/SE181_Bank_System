@@ -19,6 +19,11 @@ public class Clock {
     }
 
     public void pass(int months, Map<Integer, Account> bank) {
+
+        if (account.getAccountType() == "savings") {
+            account.availableWithdrawals += months;
+        }
+
         monthsPassed += months;
         int iters;
         for (iters = 0; iters < months; iters++) {

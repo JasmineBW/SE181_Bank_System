@@ -16,12 +16,27 @@ public class CheckingCommandValidator extends CreateCommandValidator {
 
     public boolean depositValidate(String amount) {
         if (amountChecker(amount)) {
-            double double_amount = Double.valueOf(amount).doubleValue();
+            double double_amount = Double.valueOf(amount);
             if (double_amount > 1000) {
                 return false;
             } else {
                 return true;
             }
+
+        } else {
+            return false;
+        }
+    }
+
+    public boolean withdrawValidate(String amount) {
+        if (amountChecker(amount)) {
+            double double_amount = Double.valueOf(amount);
+            if (double_amount > 400) {
+                return false;
+            } else {
+                return true;
+            }
+
         } else {
             return false;
         }
