@@ -12,8 +12,8 @@ public class InputParserTest {
     void invalid_command_correctly_split_up() {
         input = "creat checking 12345678 1.0 2000";
         components = InputParser.split(input);
-        assertEquals(6, components.length);
-        assertEquals("2000", InputParser.getAmount());
+        assertEquals(2, components.length);
+        assertEquals("checking 12345678 1.0 2000", InputParser.getExtra());
     }
 
     @Test
