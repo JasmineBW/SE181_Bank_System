@@ -10,7 +10,7 @@ public class WithdrawCommandValidator extends Validator {
     }
 
     public boolean validate(String command, String id, String amount, String extraArguments) {
-        if (!commandChecker(command) || !idChecker(id) || !amountChecker(amount) || !Objects.equals(extraArguments, "")) {
+        if (!commandChecker(command) || !idChecker(id) || !hasAccountWithIdCheck(id) || !Objects.equals(extraArguments, "")) {
             return false;
 
         } else {

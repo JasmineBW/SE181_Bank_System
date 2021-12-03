@@ -3,7 +3,7 @@ package banking;
 import java.util.Objects;
 
 public abstract class Account {
-    protected double accountBalance;
+    protected double accountBalance, funds;
     protected int longevity;
     protected int availableWithdrawals;
     private String type;
@@ -23,16 +23,19 @@ public abstract class Account {
         this.accountBalance += amount;
     }
 
-    public void withdraw(double amount) {
+    public double withdraw(double amount) {
         if (accountBalance < amount) {
+            funds = this.accountBalance;
             this.accountBalance -= this.accountBalance;
         } else {
+            funds = amount;
             this.accountBalance -= amount;
         }
 
         if (Objects.equals(type, "savings")) {
             availableWithdrawals--;
         }
+        return funds;
     }
 
     public int getID() {

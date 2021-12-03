@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class CommandProcessor {
     private static Bank bank;
-    private int ID, months;
+    private int ID, months, IDFrom, IDTo;
     private Double APR;
     private Double amount;
 
@@ -44,6 +44,15 @@ public class CommandProcessor {
             bank.deposit(ID, amount);
         } else if (Objects.equals(command, "withdraw")) {
             bank.withdraw(ID, amount);
+        }
+    }
+
+    public void transferProcess(String command, String idFrom, String idTo, String Amount) {
+        IDFrom = Integer.valueOf(idFrom);
+        IDTo = Integer.valueOf(idTo);
+        amount = Double.valueOf(Amount);
+        if (Objects.equals(command, "transfer")) {
+            bank.transfer(IDFrom, IDTo, amount);
         }
     }
 

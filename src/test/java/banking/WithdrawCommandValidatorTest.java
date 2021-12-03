@@ -163,10 +163,12 @@ public class WithdrawCommandValidatorTest {
     }
 
     @Test
-    void withdraw_more_than_account_balance() {
+    void withdraw_more_than_account_balance_takes_balance_to_0() {
+        bank.create("savings", 12345678, 0.3);
         bank.deposit(12345678, 400);
         amount = "401";
         output = withdrawCommandValidator.validate(command, idSavings, amount, extraArguments);
+        bank.withdraw(12345678, 401);
         assertTrue(output);
         assertEquals(0, bank.getAccount(12345678).getAccountBalance());
     }

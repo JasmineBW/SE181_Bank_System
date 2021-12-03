@@ -9,15 +9,18 @@ public class MasterControl {
     CreateCommandValidator createCommandValidator;
     DepositCommandValidator depositCommandValidator;
     WithdrawCommandValidator withdrawCommandValidator;
+    TransferCommandValidator transferCommandValidator;
     CommandProcessor commandProcessor;
     OutputStorage outputStorage;
 
     public MasterControl(Bank bank, CreateCommandValidator createCommandValidator, DepositCommandValidator depositCommandValidator,
-                         WithdrawCommandValidator withdrawCommandValidator, CommandProcessor commandProcessor, OutputStorage outputStorage) {
+                         WithdrawCommandValidator withdrawCommandValidator, TransferCommandValidator transferCommandValidator,
+                         CommandProcessor commandProcessor, OutputStorage outputStorage) {
         this.bank = bank;
         this.createCommandValidator = createCommandValidator;
         this.depositCommandValidator = depositCommandValidator;
         this.withdrawCommandValidator = withdrawCommandValidator;
+        this.transferCommandValidator = transferCommandValidator;
         this.commandProcessor = commandProcessor;
         this.outputStorage = outputStorage;
     }
@@ -48,17 +51,20 @@ public class MasterControl {
                         InputParser.id, InputParser.amount, InputParser.extra)) {
                     commandProcessor.process(InputParser.command, InputParser.id, InputParser.amount);
 
+                } else if (Objects.equals(InputParser.getCommand(), "transfer") && transferCommandValidator.validate(InputParser.command,
+                        InputParser.idFrom, InputParser.idTo, InputParser.amount, InputParser.extra)) {
+                    commandProcessor.transferProcess(InputParser.command, InputParser.idFrom, InputParser.idTo, InputParser.amount);
+
                 } else if (Objects.equals(InputParser.getCommand(), "pass") && PassCommandValidator.validate(InputParser.command,
                         InputParser.months, InputParser.extra)) {
                     commandProcessor.process(InputParser.command, InputParser.months);
 
                 } else {
                     outputStorage.updateInvalidCommandsList(command);
-                }
 
-            } //closing bracket for general validation
+                } //closing bracket for general validation
 
-            else { //for invalid command storage after general command validation
+            } else { //for invalid command storage after general command validation
                 outputStorage.updateInvalidCommandsList(command);
             }
         }

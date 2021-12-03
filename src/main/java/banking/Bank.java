@@ -5,7 +5,8 @@ import java.util.Map;
 
 public class Bank {
     protected Clock clock = new Clock();
-    private Account newAccount, retrievedAccount;
+    private Account newAccount, retrievedAccount, destinationAccount;
+    private double transferFunds;
     private Map<Integer, Account> accounts;
 
     public Bank() {
@@ -41,6 +42,13 @@ public class Bank {
     public void withdraw(int ID, double amount) {
         retrievedAccount = accounts.get(ID);
         retrievedAccount.withdraw(amount);
+    }
+
+    public void transfer(int IDFrom, int IDTo, double amount) {
+        retrievedAccount = accounts.get(IDFrom);
+        transferFunds = retrievedAccount.withdraw(amount);
+        destinationAccount = accounts.get(IDTo);
+        destinationAccount.deposit(transferFunds);
     }
 
     public boolean containsIdNumber(int ID) {

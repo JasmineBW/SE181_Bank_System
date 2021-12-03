@@ -14,10 +14,12 @@ public class BankTest {
     public static final String CD = "cd";
     public static final int CD_ID = 01234567;
     Bank bank;
+    private Account savings, checking;
 
     @BeforeEach
     void setUp() {
         bank = new Bank();
+        Clock.monthsPassed = 0;
     }
 
     @Test
@@ -215,11 +217,22 @@ public class BankTest {
     @Test
     public void pass_increments_months_passed() {
         bank.pass(5);
+        //System.out.println(bank.clock.getMonthsPassed());
         assertTrue(bank.clock.getMonthsPassed() == 5);
     }
 
     @Test
-    public void checking_and_savings_account_accrue_APR_over_months() {
+    void pass_command_can_be_called_twice_consecutively() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(87654321, 200);
+        bank.pass(10);
+        bank.pass(5);
+        assertTrue(bank.getAccount(87654321).getLongevity() == 15);
+
+    }
+
+    @Test
+    public void pass_makes_checking_and_savings_account_accrue_APR_over_months() {
         bank.create(CHECKING, CHECKING_ID, APR);
         bank.create(SAVINGS, SAVINGS_ID, APR);
         bank.deposit(CHECKING_ID, 200);
@@ -233,8 +246,95 @@ public class BankTest {
     public void cd_account_accrue_APR_over_months() {
         bank.create(CD, CD_ID, 2.3, 500);
         bank.pass(10);
-        System.out.println(bank.getAccount(CD_ID).getAccountBalance());
         assertTrue(bank.getAccount(CD_ID).getAccountBalance() > 500);
+    }
+
+    @Test
+    void savings_account_can_be_transferred_from() {
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 50);
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.transfer(SAVINGS_ID, CHECKING_ID, 10);
+        assertEquals(40, bank.getAccount(SAVINGS_ID).getAccountBalance());
+    }
+
+    @Test
+    void savings_account_can_be_transferred_to() {
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 20);
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 60);
+        bank.transfer(CHECKING_ID, SAVINGS_ID, 20);
+        assertEquals(40, bank.getAccount(SAVINGS_ID).getAccountBalance());
+    }
+
+    @Test
+    void savings_account_can_be_transferred_twice_to() {
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 20);
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 60);
+        bank.transfer(CHECKING_ID, SAVINGS_ID, 20);
+        bank.transfer(CHECKING_ID, SAVINGS_ID, 1);
+        assertEquals(41, bank.getAccount(SAVINGS_ID).getAccountBalance());
+    }
+
+    @Test
+    void checking_account_can_be_transferred_from() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 200);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.transfer(CHECKING_ID, SAVINGS_ID, 100);
+        assertEquals(100, bank.getAccount(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    void checking_account_can_be_transferred_twice_from() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 200);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.transfer(CHECKING_ID, SAVINGS_ID, 100);
+        bank.transfer(CHECKING_ID, SAVINGS_ID, 90);
+        assertEquals(10, bank.getAccount(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    void checking_account_can_be_transferred_to() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 200);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 5);
+        bank.transfer(SAVINGS_ID, CHECKING_ID, 5);
+        assertEquals(205, bank.getAccount(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    void checking_account_can_be_transferred_twice_to() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.deposit(CHECKING_ID, 200);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 5);
+        bank.transfer(SAVINGS_ID, CHECKING_ID, 5);
+        bank.transfer(SAVINGS_ID, CHECKING_ID, 0);
+        assertEquals(205, bank.getAccount(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    void account_balance_less_than_amount_to_be_transferred() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.deposit(SAVINGS_ID, 150);
+        bank.transfer(SAVINGS_ID, CHECKING_ID, 170);
+        assertEquals(0, bank.getAccount(SAVINGS_ID).getAccountBalance());
+        assertEquals(150, bank.getAccount(CHECKING_ID).getAccountBalance());
+    }
+
+    @Test
+    void $0_can_be_transferred_to_from_account() {
+        bank.create(CHECKING, CHECKING_ID, APR);
+        bank.create(SAVINGS, SAVINGS_ID, APR);
+        bank.transfer(SAVINGS_ID, CHECKING_ID, 0);
+        assertEquals(bank.getAccount(CHECKING_ID).getAccountBalance(), bank.getAccount(SAVINGS_ID).getAccountBalance());
     }
 }
 

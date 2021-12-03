@@ -12,7 +12,7 @@ public class CommandProcessorTest {
     private Bank bank;
     private String command;
     private String accountType;
-    private String id;
+    private String id, idFrom, idTo;
     private String apr;
     private String amount;
     private String months;
@@ -54,7 +54,7 @@ public class CommandProcessorTest {
         command = "deposit";
         id = "12345678";
         amount = "200";
-        bank.create("savings", 12345678, 1.5f);
+        bank.create("savings", 12345678, 1.5);
         bank.deposit(12345678, 300);
         commandProcessor.process(command, id, amount);
         assertEquals(500, bank.getAccount(12345678).getAccountBalance());
@@ -87,5 +87,20 @@ public class CommandProcessorTest {
         amount = "20";
         commandProcessor.process(command, id, amount);
         assertEquals(80, bank.getAccount(24681012).getAccountBalance());
+    }
+
+    @Test
+    public void valid_transfer_command() {
+        bank.create("checking", 24681012, 5);
+        bank.create("savings", 12345678, 1.5);
+        bank.deposit(24681012, 100);
+        bank.deposit(12345678, 75);
+        command = "transfer";
+        idFrom = "24681012";
+        idTo = "12345678";
+        amount = "45";
+        commandProcessor.transferProcess(command, idFrom, idTo, amount);
+        assertEquals(55, bank.getAccount(24681012).getAccountBalance());
+        assertEquals(120, bank.getAccount(12345678).getAccountBalance());
     }
 }

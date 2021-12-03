@@ -13,10 +13,23 @@ public class InputParser {
         return components;
     }
 
+    private static void clearMemory() {
+        command = "";
+        accountType = "";
+        id = "";
+        apr = "";
+        amount = "";
+        idFrom = "";
+        idTo = " ";
+        months = "";
+        extra = "";
+    }
+
     public static String[] split(String input) {
         String split[] = input.split(" ", 0);
+        clearMemory();
         command = split[0].toLowerCase();
-        extra = "";
+
 
         if (Objects.equals(command, "create")) {
             split = input.split(" ", 6);
