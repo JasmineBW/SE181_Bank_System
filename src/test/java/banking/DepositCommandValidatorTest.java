@@ -56,6 +56,27 @@ public class DepositCommandValidatorTest {
     }
 
     @Test
+    void withdraw_amount_is_negative() {
+        amount = "-500";
+        output = depositCommandValidator.validate(command, idSavings, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void withdraw_amount_is_not_a_number() {
+        amount = "forty five bucks";
+        output = depositCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void withdraw_amount_contains_symbols() {
+        amount = "1,000";
+        output = depositCommandValidator.validate(command, idSavings, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
     public void typo_in_deposit_command() {
         command = "dposit";
         amount = "1000";
@@ -128,6 +149,27 @@ public class DepositCommandValidatorTest {
     public void deposit_less_than_2500_in_savings_account() {
         amount = "2499.9";
         output = depositCommandValidator.validate(command, idSavings, amount, extraArguments);
+        assertTrue(output);
+    }
+
+    @Test
+    void deposit_more_than_$1000_in_checking_account() {
+        amount = "1000.1";
+        output = depositCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void deposit_$1000_in_checking_account() {
+        amount = "1000";
+        output = depositCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertTrue(output);
+    }
+
+    @Test
+    void deposit_less_than_$1000_in_checking_account() {
+        amount = "999";
+        output = depositCommandValidator.validate(command, idChecking, amount, extraArguments);
         assertTrue(output);
     }
 

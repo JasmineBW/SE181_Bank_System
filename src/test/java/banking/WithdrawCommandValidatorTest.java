@@ -72,6 +72,27 @@ public class WithdrawCommandValidatorTest {
     }
 
     @Test
+    void withdraw_amount_is_negative() {
+        amount = "-500";
+        output = withdrawCommandValidator.validate(command, idSavings, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void withdraw_amount_is_not_a_number() {
+        amount = "forty five bucks";
+        output = withdrawCommandValidator.validate(command, idSavings, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
+    void withdraw_amount_contains_symbols() {
+        amount = "1,000";
+        output = withdrawCommandValidator.validate(command, idChecking, amount, extraArguments);
+        assertFalse(output);
+    }
+
+    @Test
     void typo_in_withdraw_command() {
         command = "witdraw";
         amount = "50";

@@ -15,23 +15,19 @@ public class DepositCommandValidator extends Validator {
 
         } else {
             integerId = Integer.valueOf(id);
-            if (!bank.containsIdNumber(integerId)) {
-                return false;
+            String accountType = bank.getAccountType(integerId);
+            if (Objects.equals(accountType, "savings")) {
+                SavingsCommandValidator savingsDepositCommandValidator = new SavingsCommandValidator(bank);
+                return savingsDepositCommandValidator.depositValidate(amount);
+
+            } else if (Objects.equals(accountType, "checking")) {
+                CheckingCommandValidator checkingDepositCommandValidator = new CheckingCommandValidator(bank);
+                return checkingDepositCommandValidator.depositValidate(amount);
 
             } else {
-                String accountType = bank.getAccountType(integerId);
-                if (Objects.equals(accountType, "savings")) {
-                    SavingsCommandValidator savingsDepositCommandValidator = new SavingsCommandValidator(bank);
-                    return savingsDepositCommandValidator.depositValidate(amount);
-
-                } else if (Objects.equals(accountType, "checking")) {
-                    CheckingCommandValidator checkingDepositCommandValidator = new CheckingCommandValidator(bank);
-                    return checkingDepositCommandValidator.depositValidate(amount);
-
-                } else {
-                    return false;
-                }
+                return false;
             }
         }
     }
 }
+

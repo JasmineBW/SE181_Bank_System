@@ -184,12 +184,24 @@ public class CreateCommandValidatorTest {
         apr = "0,6";
         output = createCommandValidator.validate(command, accountTypeChecking, idChecking, apr, amount, extra);
         assertFalse(output);
+        amount = "500";
+        output = createCommandValidator.validate(command, accountTypeCD, idCD, apr, amount, extra);
+        assertFalse(output);
     }
 
     @Test
     public void apr_is_negative() {
         apr = "-5.5";
         output = createCommandValidator.validate(command, accountTypeChecking, idChecking, apr, amount, extra);
+        assertFalse(output);
+    }
+
+    @Test
+    void extra_arguments_entered_in_command() {
+        apr = "5";
+        amount = "100";
+        extra = " ";
+        output = createCommandValidator.validate(command, accountTypeSavings, idSavings, apr, amount, extra);
         assertFalse(output);
     }
 }

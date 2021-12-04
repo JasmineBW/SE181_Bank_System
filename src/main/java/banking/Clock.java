@@ -2,6 +2,7 @@ package banking;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Clock {
@@ -23,7 +24,7 @@ public class Clock {
         Months = months;
         monthsPassed += months;
         int iters;
-        for (iters = 0; iters < months; iters++) {
+        for (iters = 0; iters < months; ++iters) {
             accountUpdate(bank);
         }
     }
@@ -41,19 +42,14 @@ public class Clock {
                 iterator.remove();
 
             } else if (initial_account_balance < 100) {
-                if (minimum_balance_fee > initial_account_balance) {
+                if (minimum_balance_fee >= initial_account_balance) {
                     newBalance = 0;
                     iterator.remove();
-                } else if (initial_account_balance >= minimum_balance_fee) {
+                } else if (minimum_balance_fee < initial_account_balance) {
                     newBalance = initial_account_balance - minimum_balance_fee;
                 }
                 account.updateAccountBalance(newBalance);
-
-                if (account.getAccountType() == "cd") {
-                    calculator.CDCalculateAPR(account);
-                } else {
-                    calculator.calculateApr(account);
-                }
+                calculator.calculateApr(account);
 
             } else if (initial_account_balance >= 100) {
                 if (account.getAccountType() == "cd") {
@@ -63,7 +59,7 @@ public class Clock {
                 }
             }
 
-            if (account.getAccountType() == "savings") {
+            if (Objects.equals(account.getAccountType(), "savings")) {
                 account.availableWithdrawals += Months;
             }
 

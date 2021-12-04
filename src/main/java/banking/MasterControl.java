@@ -27,10 +27,10 @@ public class MasterControl {
 
     public ArrayList start(List<String> input) {
         for (String command : input) {
-            String[] components = InputParser.split(command);
+            InputParser.split(command);
 
-            if (Validator.commandChecker(InputParser.getCommand())) {
-                if (Objects.equals(InputParser.getCommand(), "create") && createCommandValidator.validate(InputParser.command,
+            if (Validator.commandChecker(InputParser.command)) {
+                if (Objects.equals(InputParser.command, "create") && createCommandValidator.validate(InputParser.command,
                         InputParser.accountType, InputParser.id, InputParser.apr, InputParser.amount, InputParser.extra)) {
 
                     if (Objects.equals(InputParser.accountType, "cd")) {
@@ -42,23 +42,23 @@ public class MasterControl {
                                 InputParser.apr);
                     }
 
-                } else if (Objects.equals(InputParser.getCommand(), "deposit") && depositCommandValidator.validate(InputParser.command,
+                } else if (Objects.equals(InputParser.command, "deposit") && depositCommandValidator.validate(InputParser.command,
                         InputParser.id, InputParser.amount, InputParser.extra)) {
                     bank.getAccount(Integer.valueOf(InputParser.id)).validCommandsStorage.add(command);
                     commandProcessor.process(InputParser.command, InputParser.id, InputParser.amount);
 
-                } else if (Objects.equals(InputParser.getCommand(), "withdraw") && withdrawCommandValidator.validate(InputParser.command,
+                } else if (Objects.equals(InputParser.command, "withdraw") && withdrawCommandValidator.validate(InputParser.command,
                         InputParser.id, InputParser.amount, InputParser.extra)) {
                     bank.getAccount(Integer.valueOf(InputParser.id)).validCommandsStorage.add(command);
                     commandProcessor.process(InputParser.command, InputParser.id, InputParser.amount);
 
-                } else if (Objects.equals(InputParser.getCommand(), "transfer") && transferCommandValidator.validate(InputParser.command,
+                } else if (Objects.equals(InputParser.command, "transfer") && transferCommandValidator.validate(InputParser.command,
                         InputParser.idFrom, InputParser.idTo, InputParser.amount, InputParser.extra)) {
                     bank.getAccount(Integer.valueOf(InputParser.idFrom)).validCommandsStorage.add(command);
                     bank.getAccount(Integer.valueOf(InputParser.idTo)).validCommandsStorage.add(command);
                     commandProcessor.transferProcess(InputParser.command, InputParser.idFrom, InputParser.idTo, InputParser.amount);
 
-                } else if (Objects.equals(InputParser.getCommand(), "pass") && PassCommandValidator.validate(InputParser.command,
+                } else if (Objects.equals(InputParser.command, "pass") && PassCommandValidator.validate(InputParser.command,
                         InputParser.months, InputParser.extra)) {
                     commandProcessor.process(InputParser.command, InputParser.months);
 

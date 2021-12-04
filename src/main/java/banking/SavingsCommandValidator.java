@@ -6,7 +6,7 @@ public class SavingsCommandValidator extends CreateCommandValidator {
     }
 
     public boolean createValidate(String id, String apr) {
-        return idChecker(id) && aprChecker(apr);
+        return (aprChecker(apr));
     }
 
     public boolean depositValidate(String amount) {
@@ -23,14 +23,10 @@ public class SavingsCommandValidator extends CreateCommandValidator {
     }
 
     public boolean withdrawValidate(int id, String amount) {
-        if (amountChecker(amount)) {
-            double double_amount = Double.valueOf(amount);
-            int availableWithdrawals = bank.getAccount(id).availableWithdrawals;
-            if (double_amount <= 1000 && availableWithdrawals > 0) {
-                return true;
-            } else {
-                return false;
-            }
+        double double_amount = Double.valueOf(amount);
+        int availableWithdrawals = bank.getAccount(id).availableWithdrawals;
+        if (double_amount <= 1000 && availableWithdrawals > 0) {
+            return true;
         } else {
             return false;
         }

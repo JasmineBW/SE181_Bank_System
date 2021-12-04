@@ -28,7 +28,7 @@ public abstract class Account {
     }
 
     public double withdraw(double amount) {
-        if (accountBalance < amount) {
+        if (accountBalance <= amount) {
             funds = this.accountBalance;
             this.accountBalance -= this.accountBalance;
         } else {

@@ -7,7 +7,7 @@ public class CheckingCommandValidator extends CreateCommandValidator {
     }
 
     public boolean createValidate(String id, String apr) {
-        if (idChecker(id) && aprChecker(apr)) {
+        if (aprChecker(apr)) {
             return true;
         } else {
             return false;
