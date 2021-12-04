@@ -39,4 +39,12 @@ public class InputParserTest {
         assertEquals("d", InputParser.getCommand());
         assertEquals("200", InputParser.getExtra());
     }
+
+    @Test
+    void extra_spaces_before_and_within_input_is_caught() {
+        input = "deposit   23456789  300";
+        components = InputParser.split(input);
+        assertEquals("", components[1]);
+        assertEquals("23456789  300", InputParser.getExtra());
+    }
 }

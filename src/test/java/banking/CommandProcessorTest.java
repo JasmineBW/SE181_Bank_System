@@ -75,6 +75,7 @@ public class CommandProcessorTest {
         command = "pass";
         months = "25";
         commandProcessor.process(command, months);
+        System.out.println(bank.clock.getMonthsPassed());
         assertEquals(25, bank.clock.getMonthsPassed());
     }
 
